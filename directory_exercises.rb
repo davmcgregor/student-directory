@@ -23,8 +23,13 @@ def print_header
 end
 
 def print(students)
+  puts "Print students starting with a particular letter: "
+  letter = gets.chomp
+
   students.each.with_index(1) do |student, index|
-    puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name][0] == letter
+      puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
@@ -36,4 +41,4 @@ end
 students = input_students
 print_header
 print(students)
-print_footer(students)
+# print_footer(students)
