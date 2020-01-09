@@ -25,6 +25,7 @@ def print_header
 end
 
 def print(students)
+  students.sort! { |a, b| a[:cohort] <=> b[:cohort] }
   students.each.with_index(1) do |student, index|
       puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)".center(100)
   end
@@ -38,4 +39,4 @@ end
 students = input_students
 print_header
 print(students)
-# print_footer(students)
+print_footer(students)
