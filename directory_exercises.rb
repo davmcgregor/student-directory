@@ -5,12 +5,12 @@ def input_students
 
   puts "Please enter the name of a student"
   puts "To finish at any point, just hit return twice"
-  name = gets.chomp
+  name = gets.strip
     if name.empty?
       break
     end
   puts "Please enter the cohort month of the student"
-  cohort = gets.chomp.to_sym
+  cohort = gets.strip.to_sym
   cohort = :november if cohort.empty?
 
   students << {name: name, cohort: cohort}
@@ -26,7 +26,7 @@ end
 
 def print(students)
   puts "What cohort do you want to print out? "
-  selected_cohort = gets.chomp
+  selected_cohort = gets.strip
 
   puts students.select.with_index(1) {|student, index| if
     student[:cohort].to_s == selected_cohort
