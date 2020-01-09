@@ -9,12 +9,11 @@ def input_students
     if name.empty?
       break
     end
-  puts "Please enter the country of birth of the student"
-  country = gets.chomp
-  puts "Please enter the height of the student"
-  height = gets.chomp
+  puts "Please enter the cohort month of the student"
+  cohort = gets.chomp.to_sym
+  cohort = :november if cohort.empty?
 
-  students << {name: name, cohort: :november, country: country, height: height}
+  students << {name: name, cohort: cohort}
   puts "Now we have #{students.count} students"
   end
   students
@@ -27,7 +26,7 @@ end
 
 def print(students)
   students.each.with_index(1) do |student, index|
-      puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort), #{student[:country]}, #{student[:height]}".center(100)
+      puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)".center(100)
   end
 end
 
