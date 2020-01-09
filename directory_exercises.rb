@@ -1,8 +1,6 @@
 def input_students
   students = []
 
-
-
   while true do
 
   puts "Please enter the name of a student"
@@ -23,18 +21,18 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(100)
+  puts "-------------".center(100)
 end
 
 def print(students)
   students.each.with_index(1) do |student, index|
-      puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort), #{student[:country]}, #{student[:height]}"
+      puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort), #{student[:country]}, #{student[:height]}".center(100)
   end
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students".center(100)
 end
 
 #nothing happens until we call the methods
