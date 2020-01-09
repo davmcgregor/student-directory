@@ -25,11 +25,16 @@ def print_header
 end
 
 def print(students)
-  students.sort! { |a, b| a[:cohort] <=> b[:cohort] }
-  students.each.with_index(1) do |student, index|
+  puts "What cohort do you want to print out? "
+  selected_cohort = gets.chomp
+
+  puts students.select.with_index(1) {|student, index| if
+    student[:cohort].to_s == selected_cohort
       puts "#{index}: #{student[:name]} (#{student[:cohort]} cohort)".center(100)
-  end
+    end
+  }
 end
+
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students".center(100)
