@@ -35,9 +35,12 @@ def print(students)
   }
 end
 
+def pluralize_students(n)
+  n.count == 1 ? "1 great student" : "#{n.count} great students"
+end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(100)
+    puts "Overall we have #{pluralize_students(students)}".center(100)
 end
 
 #nothing happens until we call the methods
