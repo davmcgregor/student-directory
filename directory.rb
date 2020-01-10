@@ -72,7 +72,10 @@ def process(selection)
 end
 
 def save_students
-  file = File.open("students.csv", "w")
+  puts "Where would you like to save students?"
+  filesaved_chosen = STDIN.gets.chomp + ".csv"
+  file = File.open(filesaved_chosen, "w")
+
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
@@ -83,7 +86,10 @@ def save_students
 end
 
 def load_students(filename = "students.csv")
-  file = File.open("students.csv", "r")
+  puts "Which file would you like to load from?"
+  filename = STDIN.gets.chomp
+
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
     add_student(name,cohort)
