@@ -1,3 +1,5 @@
+require "csv"
+
 @students = []
 
 def input_students
@@ -9,7 +11,7 @@ def input_students
   #while the name is not empty, repeat this code
   while !name.empty? do
     #add the student hash to the array
-    add_student(name,cohort = :november)
+    add_student(name)
     puts "Now we have #{@students.count} students"
     #get another name from the user
     name = STDIN.gets.chomp
@@ -73,15 +75,11 @@ end
 
 def save_students
   puts "Where would you like to save students?"
-  filesaved_chosen = STDIN.gets.chomp + ".csv"
-  file = File.open(filesaved_chosen, "w")
+  filesaved_chosen = STDIN.gets.chomp
 
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  CSV.open(filesaved_chosen, "w") do |csv|
+    @students.each { |student| csv << [student[:name], student[:cohort]] }
   end
-  file.close
   puts "Students have been saved succefully"
 end
 
@@ -89,17 +87,16 @@ def load_students(filename = "students.csv")
   puts "Which file would you like to load from?"
   filename = STDIN.gets.chomp
 
+  CSV.foreach(filename) do |line|
   file = File.open(filename, "r")
-  file.readlines.each do |line|
-  name, cohort = line.chomp.split(',')
-    add_student(name,cohort)
+  name, cohort = line
+    add_student(name, cohort)
   end
-  file.close
   puts "Students have been loaded succesfully"
 end
 
-def add_student(name,cohort)
-  @students << {name: name, cohort: cohort.to_sym}
+def add_student(name,cohort = :november)
+  @students << {name: name, cohort: cohort}
 end
 
 def autoload_students
