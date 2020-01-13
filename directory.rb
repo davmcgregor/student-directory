@@ -44,8 +44,8 @@ end
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list from a file"
   puts "9. Exit"
 end
 
@@ -83,16 +83,25 @@ def save_students
   puts "Students have been saved succefully"
 end
 
-def load_students(filename = "students.csv")
+def load_students
   puts "Which file would you like to load from?"
-  filename = STDIN.gets.chomp
+    filename = STDIN.gets.chomp
+  if !File.exist?(filename)
+    filename = "students.csv"
+  puts "File does not exist, loading default"
+end
+    csv_to_array(filename)
+    puts "File has loaded"
+end
 
-  CSV.foreach(filename) do |line|
-  file = File.open(filename, "r")
-  name, cohort = line
-    add_student(name, cohort)
+def csv_to_array (csv_file)
+  file = File.open(csv_file, "r") do |f|
+    @students = []
+    CSV.foreach(f) do |line|
+    name, cohort = line[0], line[1]
+    add_student(name,cohort)
+    end
   end
-  puts "Students have been loaded succesfully"
 end
 
 def add_student(name,cohort = :november)
@@ -102,13 +111,17 @@ end
 def autoload_students
   filename = ARGV.first
   if filename.nil?
-    load_students
-  elsif File.exists?(filename)
-    load_students(filename)
-      puts "Loaded #{@students.count} from #{filename}"
-  else
-    puts "Sorry, #{filename} doesn't exist."
-    exit
+    filename = "students.csv"
+  end
+  check_file(filename)
+end
+
+def check_file(filename)
+  if File.exists?(filename)
+    csv_to_array(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else # If it doesn't exist
+    puts "Sorry, the filename #{filename} doesn't exist."
   end
 end
 
